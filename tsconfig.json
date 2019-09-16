@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "noImplicitThis": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true,
+  },
+  "include": ["src"],
+  "exclude": ["node_modules/", "**/__tests__/*"]
+}

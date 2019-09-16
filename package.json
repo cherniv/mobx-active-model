@@ -4,7 +4,8 @@
   "description": "Javascript model managed in Rails style based on Mobx",
   "main": "src/Model.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build" : "tsc"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,7 @@
   "dependencies": {
     "mobx": "^5.13.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "^3.6.3"
+  }
 }
