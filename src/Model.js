@@ -1,5 +1,5 @@
 import { set, observable, isObservableProp, isComputedProp } from "mobx";
-import Api from 'axios';
+var Api; // should be axios
 var Storage; // should be ReactNative' AsyncStorage
 
 const _copy = (obj1, obj2) => {
@@ -95,7 +95,11 @@ export default class Model {
   }
 }
 
-Model.setStorage = function(_Storage) {
+Model.setApiVendor = function(_Api) {
+  Api = _Api;
+}
+
+Model.setStorageVendor = function(_Storage) {
   Storage = _Storage;
 }
 
