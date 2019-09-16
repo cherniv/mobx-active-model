@@ -1,6 +1,6 @@
 import { set, observable, isObservableProp, isComputedProp } from "mobx";
-import {AsyncStorage as Storage} from 'react-native';
 import Api from 'axios';
+var Storage; // should be ReactNative' AsyncStorage
 
 const _copy = (obj1, obj2) => {
   if (!obj2 || !Object.keys(obj2).length) return;
@@ -93,6 +93,10 @@ export default class Model {
       Api.delete(this.constructor.REMOTE_PATH + '' + this.id)
     
   }
+}
+
+Model.setStorage = function(_Storage) {
+  Storage = _Storage;
 }
 
 /**
