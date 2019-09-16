@@ -95,11 +95,11 @@ export default class Model {
   }
 }
 
-Model.setApiVendor = function(_Api) {
+export const setApiVendor = function(_Api) {
   Api = _Api;
 }
 
-Model.setStorageVendor = function(_Storage) {
+export const setStorageVendor = function(_Storage) {
   Storage = _Storage;
 }
 
