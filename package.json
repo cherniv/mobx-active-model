@@ -1,0 +1,30 @@
+{
+  "name": "mobx-active-model",
+  "version": "0.0.1",
+  "description": "Javascript model managed in Rails style based on Mobx",
+  "main": "src/Model.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cherniv/mobx-active-model.git"
+  },
+  "keywords": [
+    "Mobx",
+    "model",
+    "rails",
+    "javascript"
+  ],
+  "author": "Ivan Chernykh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cherniv/mobx-active-model/issues"
+  },
+  "homepage": "https://github.com/cherniv/mobx-active-model#readme",
+  "dependencies": {
+    "mobx": "^5.13.0",
+    "axios": "^0.19.0"
+  },
+  "devDependencies": {}
+}
