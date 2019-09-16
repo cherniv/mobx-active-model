@@ -10,6 +10,14 @@ const _copy = (obj1, obj2) => {
   }
 }
 
+export const setApiVendor = function(_Api) {
+  Api = _Api;
+}
+
+export const setStorageVendor = function(_Storage) {
+  Storage = _Storage;
+}
+
 export default class Model {
 
   id;
@@ -93,14 +101,6 @@ export default class Model {
       Api.delete(this.constructor.REMOTE_PATH + '' + this.id)
     
   }
-}
-
-export const setApiVendor = function(_Api) {
-  Api = _Api;
-}
-
-export const setStorageVendor = function(_Storage) {
-  Storage = _Storage;
 }
 
 /**
