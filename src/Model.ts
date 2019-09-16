@@ -51,7 +51,7 @@ export default class Model {
   /**
    * @return new instance without id 
    */
-  static new = function(obj:any) {
+  static new = function(obj:any = null) {
     // this.prototype.constructor is the trick
     return new this.prototype.constructor(obj);
   }
@@ -65,7 +65,7 @@ export default class Model {
   /**
   * @return new instance with id (async (use with await))
   */
-  static create = async function(obj:any) {
+  static create = async function(obj:any = null) {
     var instance = this.new(obj);
     await instance.save();
     return instance;
