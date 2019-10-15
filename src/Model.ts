@@ -97,15 +97,24 @@ export default class Model {
   };
 
   static populate = function(data: any = [], opts: any = {}) {
-    const { merge } = opts;
+    const { merge, concat, mergeProp = 'id' } = opts;
     var oldData = this.prototype.constructor.all.slice();
     var newData = data.map((item: any) => this.new(item));
     var newAll;
-    if (!merge) {
-      newAll = newData;
-    } else {
+    if (merge) {
+      newAll = oldData;
+      newData.forEach((newItem: any) => {
+        if (!oldData.find((oldItem: any) => {
+          return oldItem[mergeProp] == newItem[mergeProp]
+        })) {
+          newAll.push(newItem);
+        }
+      });
+    } else if (concat) {
       newAll = oldData.concat(newData);
-    }
+    } else {
+      newAll = newData;
+    } 
 
     this.prototype.constructor.all.replace(newAll);
   };
