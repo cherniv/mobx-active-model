@@ -67,4 +67,9 @@ describe('Medication model', () => {
     await med.save();
     expect(med.id).not.toBeUndefined();
   })
+  it('"Populate" method with `merge` setting should not add new item if exists already in list', async () => {
+    Model.populate([{id: 1}, {id: 2}]);
+    Model.populate([{id: 2}, {id: 3}], {merge: true}); // will not add {id:2} again
+    expect(Model.all.length).toBe(3);
+  })
 })
