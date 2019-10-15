@@ -104,9 +104,11 @@ export default class Model {
     if (merge) {
       newAll = oldData;
       newData.forEach((newItem: any) => {
-        if (!oldData.find((oldItem: any) => {
-          return oldItem[mergeProp] == newItem[mergeProp]
-        })) {
+        if (
+          !oldData.find((oldItem: any) => {
+            return oldItem[mergeProp] == newItem[mergeProp];
+          })
+        ) {
           newAll.push(newItem);
         }
       });
@@ -114,7 +116,7 @@ export default class Model {
       newAll = oldData.concat(newData);
     } else {
       newAll = newData;
-    } 
+    }
 
     this.prototype.constructor.all.replace(newAll);
   };
