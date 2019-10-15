@@ -6,7 +6,9 @@ const _copy = (obj1: any, obj2: any) => {
   if (!obj2 || !Object.keys(obj2).length) return;
   for (var key in obj2) {
     //set(obj1, key, obj2[key]);
-    obj1[key] = obj2[key];
+    if (!isComputedProp(obj1, key)) {
+      obj1[key] = obj2[key];
+    }
   }
 };
 
