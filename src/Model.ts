@@ -128,7 +128,8 @@ export default class Model {
         return cachedItem;
       } else {
         var { data } = await Api.get(this.REMOTE_PATH + id);
-        this.prototype.constructor.all.push(data);
+        this.prototype.constructor.all.push(this.new(data));
+        this.cacheOnLocal();
         return data;
       }
     } catch (e) {
