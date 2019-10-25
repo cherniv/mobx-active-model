@@ -79,10 +79,10 @@ export default class Model {
     this.populate(data);
   };
 
-  static fetchFromRemote = async function() {
+  static fetchFromRemote = async function(id: any) {
     try {
-      var { data } = await Api.get(this.REMOTE_PATH);
-      //data = data ? JSON.parse(data) : [];
+      var { data } = await Api.get(this.REMOTE_PATH + (id || ''));
+      if (id || !Array.isArray(data)) data = [data];
       this.populate(data);
     } catch (e) {
       console.warn('Model.fetchFromRemote failed', e);
