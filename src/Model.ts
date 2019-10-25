@@ -121,17 +121,9 @@ export default class Model {
     this.prototype.constructor.all.replace(newAll);
   };
 
-  static find = async function(id: string) {
+  static find = function(id: string) {
     try {
-      var cachedItem = this.prototype.constructor.all.find((item: Model) => item.id == id);
-      if (cachedItem) {
-        return cachedItem;
-      } else {
-        var { data } = await Api.get(this.REMOTE_PATH + id);
-        this.prototype.constructor.all.push(this.new(data));
-        this.cacheOnLocal();
-        return data;
-      }
+      return this.prototype.constructor.all.find((item: Model) => item.id == id);
     } catch (e) {
       console.log('Model.find failed:', id, this.prototype.constructor.all);
       return null;
