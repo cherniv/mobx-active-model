@@ -89,13 +89,6 @@ export default class Model {
     }
   };
 
-  static fetchFromRemoteAsync = function() {
-    Api.get(this.REMOTE_PATH).then((response: any) => {
-      var { data } = response;
-      this.populate(data);
-    });
-  };
-
   static populate = function(data: any = [], opts: any = {}) {
     const { merge, concat, mergeProp = 'id' } = opts;
     var oldData = this.prototype.constructor.all.slice();
