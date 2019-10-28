@@ -79,7 +79,7 @@ export default class Model {
     this.populate(data);
   };
 
-  static fetchFromRemote = async function(id: any) {
+  static fetchFromRemote = async function(id: any = null) {
     try {
       var { data } = await Api.get(this.REMOTE_PATH + (id || ''));
       if (id || !Array.isArray(data)) data = [data];
