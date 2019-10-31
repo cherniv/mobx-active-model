@@ -79,14 +79,14 @@ export default class Model {
     this.populate(data);
   };
 
-  /** 
+  /**
    * fetchFromRemote(null) calls Api.get('users/')
    * fetchFromRemote(id) calls Api.get('users/:id')
    * fetchFromRemote(query) calls Api.post(':runQuery')
    */
   static fetchFromRemote = async function(query: any = null, autoPopulate: boolean = true) {
     var id;
-    var to:string = typeof query;
+    var to: string = typeof query;
     if (to == 'number' || to == 'string') id = query;
     try {
       var _data;
@@ -95,7 +95,7 @@ export default class Model {
         if (!Array.isArray(data)) data = [data];
         _data = data;
       } else if (!id && query) {
-        var { data } = await Api.post( ":runQuery", query );
+        var { data } = await Api.post(':runQuery', query);
         _data = data;
       }
       autoPopulate && this.populate(_data);
