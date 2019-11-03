@@ -1,4 +1,4 @@
-import Model, {setApiVendor, setStorageVendor} from '../src/Model';
+import Model from '../src/Model';
 
 const AsyncStorage = {
   removeItem: jest.fn(),
@@ -15,8 +15,8 @@ const HttpClient = {
 
 describe('Medication model', () => {
   beforeEach(() => {
-    setApiVendor(HttpClient);
-    setStorageVendor(AsyncStorage);
+    Model.Api = (HttpClient);
+    Model.Storage = (AsyncStorage);
     Model.populate([])
     Model.LOCAL_PATH = 'models/'
     jest.clearAllMocks();

@@ -1,6 +1,4 @@
 import { set, observable, isObservableProp, isComputedProp } from 'mobx';
-var Api: any; // should be axios
-var Storage: any; // should be ReactNative' AsyncStorage
 
 const _copy = (obj1: any, obj2: any) => {
   if (!obj2 || !Object.keys(obj2).length) return;
@@ -12,14 +10,6 @@ const _copy = (obj1: any, obj2: any) => {
   }
 };
 
-export const setApiVendor = function(_Api: any) {
-  Api = _Api;
-};
-
-export const setStorageVendor = function(_Storage: any) {
-  Storage = _Storage;
-};
-
 export default class Model {
   static REMOTE_PATH?: string;
   static LOCAL_PATH?: string;
@@ -28,6 +18,25 @@ export default class Model {
   id?: string;
 
   _afterSave?: Function;
+
+  static _Api?: any;
+  static get Api() {
+    const constructor = this.prototype.constructor as typeof Model;
+    return constructor._Api;
+  }
+  static set Api(_Api: any) {
+    const constructor = this.prototype.constructor as typeof Model;
+    constructor._Api = _Api;
+  };
+  static _Storage?: any;
+  static get Storage() {
+    const constructor = this.prototype.constructor as typeof Model;
+    return constructor._Storage;
+  }
+  static set Storage(_Storage: any) {
+    const constructor = this.prototype.constructor as typeof Model;
+    constructor._Storage = _Storage;
+  };
 
   // Model.all is getter
   static get all() {
@@ -43,7 +52,8 @@ export default class Model {
       console.log('Model has no LOCAL_PATH for cacheOnLocal!');
       return;
     }
-    Storage.setItem(this.LOCAL_PATH, JSON.stringify(this.prototype.constructor.all));
+    const {Storage, LOCAL_PATH} = this;
+    Storage.setItem(LOCAL_PATH, JSON.stringify(this.prototype.constructor.all));
   };
 
   /**
@@ -73,7 +83,8 @@ export default class Model {
    * Populate from local cache
    */
   static fetchFromCache = async function() {
-    var data = await Storage.getItem(this.LOCAL_PATH);
+    const {Storage, LOCAL_PATH} = this;
+    var data = await Storage.getItem(LOCAL_PATH);
 
     data = data ? JSON.parse(data) : [];
     this.populate(data);
@@ -85,13 +96,14 @@ export default class Model {
    * fetchFromRemote(query) calls Api.post(':runQuery')
    */
   static fetchFromRemote = async function(query: any = null, autoPopulate: boolean = true) {
+    const {Api, REMOTE_PATH} = this;
     var id;
     var to: string = typeof query;
     if (to == 'number' || to == 'string') id = query;
     try {
       var _data;
       if (!query || id) {
-        var { data } = await Api.get(this.REMOTE_PATH + (id || ''));
+        var { data } = await Api.get(REMOTE_PATH + (id || ''));
         if (!Array.isArray(data)) data = [data];
         _data = data;
       } else if (!id && query) {
@@ -149,7 +161,7 @@ export default class Model {
   };
 
   async save() {
-    const { REMOTE_PATH, all } = this.constructor as typeof Model;
+    const { REMOTE_PATH, all, Api } = this.constructor as typeof Model;
 
     if (REMOTE_PATH) {
       // taking only observable attributes, no methods etc
@@ -187,10 +199,11 @@ export default class Model {
 
   destroy() {
     const constructor = this.constructor as typeof Model;
-    constructor.all.remove(constructor.all.find((item: any) => item.id == this.id));
+    const {all, REMOTE_PATH, Api} = constructor;
+    all.remove(all.find((item: any) => item.id == this.id));
     this.cacheOnLocal();
 
     // "DELETE" call to backend api
-    if (constructor.REMOTE_PATH) Api.delete(constructor.REMOTE_PATH + '' + this.id);
+    if (REMOTE_PATH) Api.delete(REMOTE_PATH + '' + this.id);
   }
 }
