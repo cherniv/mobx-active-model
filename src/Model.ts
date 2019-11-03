@@ -27,7 +27,7 @@ export default class Model {
   static set Api(_Api: any) {
     const constructor = this.prototype.constructor as typeof Model;
     constructor._Api = _Api;
-  };
+  }
   static _Storage?: any;
   static get Storage() {
     const constructor = this.prototype.constructor as typeof Model;
@@ -36,7 +36,7 @@ export default class Model {
   static set Storage(_Storage: any) {
     const constructor = this.prototype.constructor as typeof Model;
     constructor._Storage = _Storage;
-  };
+  }
 
   // Model.all is getter
   static get all() {
@@ -52,7 +52,7 @@ export default class Model {
       console.log('Model has no LOCAL_PATH for cacheOnLocal!');
       return;
     }
-    const {Storage, LOCAL_PATH} = this;
+    const { Storage, LOCAL_PATH } = this;
     Storage.setItem(LOCAL_PATH, JSON.stringify(this.prototype.constructor.all));
   };
 
@@ -83,7 +83,7 @@ export default class Model {
    * Populate from local cache
    */
   static fetchFromCache = async function() {
-    const {Storage, LOCAL_PATH} = this;
+    const { Storage, LOCAL_PATH } = this;
     var data = await Storage.getItem(LOCAL_PATH);
 
     data = data ? JSON.parse(data) : [];
@@ -96,7 +96,7 @@ export default class Model {
    * fetchFromRemote(query) calls Api.post(':runQuery')
    */
   static fetchFromRemote = async function(query: any = null, autoPopulate: boolean = true) {
-    const {Api, REMOTE_PATH} = this;
+    const { Api, REMOTE_PATH } = this;
     var id;
     var to: string = typeof query;
     if (to == 'number' || to == 'string') id = query;
@@ -199,7 +199,7 @@ export default class Model {
 
   destroy() {
     const constructor = this.constructor as typeof Model;
-    const {all, REMOTE_PATH, Api} = constructor;
+    const { all, REMOTE_PATH, Api } = constructor;
     all.remove(all.find((item: any) => item.id == this.id));
     this.cacheOnLocal();
 

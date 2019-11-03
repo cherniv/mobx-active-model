@@ -1,6 +1,6 @@
 {
   "name": "mobx-active-model",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Javascript model managed in Rails style based on Mobx",
   "main": "index.js",
   "types": "index.d.ts",

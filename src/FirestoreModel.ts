@@ -9,7 +9,7 @@ export default class Model extends BaseModel {
   static set Firebase(_Firebase: any) {
     const constructor = this.prototype.constructor as typeof Model;
     constructor._Firebase = _Firebase;
-  };
+  }
   constructor(obj: any = null) {
     super(obj);
     this.listenForRemoteChanges();
