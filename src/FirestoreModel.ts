@@ -1,4 +1,4 @@
-import BaseModel from "./Model";
+import BaseModel from './Model';
 
 var firebase: any;
 export const setFirebaseInstance = function(_firebase: any) {
@@ -12,7 +12,7 @@ export default class Model extends BaseModel {
     if (firebase) {
       this.listenForRemoteChanges();
     } else {
-      console.log("No Firebase instance is set");
+      console.log('No Firebase instance is set');
     }
   }
 
