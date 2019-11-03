@@ -1,2 +1,4 @@
 import Model from './src/Model';
-export {Model};
+import FirestoreModel from './src/FirestoreModel';
+export {FirestoreModel};
+export default Model;
