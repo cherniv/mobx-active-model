@@ -12,17 +12,16 @@ export default class Model extends BaseModel {
   }
   constructor(obj: any = null) {
     super(obj);
-    this.listenForRemoteChanges();
     const { Firebase } = this.constructor as typeof Model;
     if (Firebase) {
-      this.listenForRemoteChanges();
+      this.listenForRemoteChangesForInstance();
     } else {
       console.log('No Firebase instance is set');
     }
   }
 
-  listenForRemoteChanges() {
     const path = Object.getPrototypeOf(this).constructor.REMOTE_PATH + this.id;
+  listenForRemoteChangesForInstance() {
     const { Firebase } = this.constructor as typeof Model;
     Firebase.firestore()
       .doc(path)
