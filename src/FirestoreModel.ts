@@ -20,14 +20,19 @@ export default class Model extends BaseModel {
     }
   }
 
-    const path = Object.getPrototypeOf(this).constructor.REMOTE_PATH + this.id;
   listenForRemoteChangesForInstance() {
+    const {constructor} = Object.getPrototypeOf(this);
+    const path = constructor.REMOTE_PATH + this.id;
     const { Firebase } = this.constructor as typeof Model;
     Firebase.firestore()
       .doc(path)
-      .onSnapshot((snapshot: any) => {
-        var data = snapshot.data();
-        Object.assign(this, data);
-      });
+      .onSnapshot((snapshot: any) => 
+        this._updateInstance(this, snapshot)
+      );
+  }
+
+  _updateInstance(instance: any, snapshot: any) {
+    var data = snapshot.data();
+    Object.assign(instance, data);
   }
 }
