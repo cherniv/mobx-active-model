@@ -21,14 +21,12 @@ export default class Model extends BaseModel {
   }
 
   listenForRemoteChangesForInstance() {
-    const {constructor} = Object.getPrototypeOf(this);
+    const { constructor } = Object.getPrototypeOf(this);
     const path = constructor.REMOTE_PATH + this.id;
     const { Firebase } = this.constructor as typeof Model;
     Firebase.firestore()
       .doc(path)
-      .onSnapshot((snapshot: any) => 
-        this._updateInstance(this, snapshot)
-      );
+      .onSnapshot((snapshot: any) => this._updateInstance(this, snapshot));
   }
 
   _updateInstance(instance: any, snapshot: any) {

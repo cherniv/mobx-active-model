@@ -145,7 +145,7 @@ export default class Model {
   static populateAndCacheOnLocal = function(data: any = [], opts: any = {}) {
     this.populate(data, opts);
     this.cacheOnLocal();
-  }
+  };
 
   static find = function(id: string) {
     try {
