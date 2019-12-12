@@ -142,6 +142,11 @@ export default class Model {
     this.prototype.constructor.all.replace(newAll);
   };
 
+  static populateAndCacheOnLocal = function(data: any = [], opts: any = {}) {
+    this.populate(data, opts);
+    this.cacheOnLocal();
+  }
+
   static find = function(id: string) {
     try {
       return this.prototype.constructor.all.find((item: Model) => item.id == id);
