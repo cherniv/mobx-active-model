@@ -100,7 +100,7 @@ export default class Model {
     const { Api, REMOTE_PATH } = this;
     var id;
     var to: string = typeof query;
-    if (to == 'number' || to == 'string'  || Array.isArray(query)) id = query;
+    if (to == 'number' || to == 'string' || Array.isArray(query)) id = query;
     try {
       var _data;
       if (!query || id) {
