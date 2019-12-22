@@ -93,13 +93,14 @@ export default class Model {
   /**
    * fetchFromRemote(null) calls Api.get('users/')
    * fetchFromRemote(id) calls Api.get('users/:id')
+   * fetchFromRemote([id1,id2,...]) calls Api.get('users/:id1,:id2') => firestore.collection.where(documentId(),'in',ids)
    * fetchFromRemote(query) calls Api.post(':runQuery')
    */
   static fetchFromRemote = async function(query: any = null, autoPopulate: boolean = true) {
     const { Api, REMOTE_PATH } = this;
     var id;
     var to: string = typeof query;
-    if (to == 'number' || to == 'string') id = query;
+    if (to == 'number' || to == 'string'  || Array.isArray(query)) id = query;
     try {
       var _data;
       if (!query || id) {
