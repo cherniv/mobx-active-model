@@ -6,8 +6,9 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
-    "build": "tsc",
-    "prepare": "npm run build",
+    "compile": "tsc",
+    "build": "npm version patch && npm publish",
+    "prepare": "npm run compile",
     "prepublishOnly": "npm test",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
