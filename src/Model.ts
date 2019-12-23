@@ -167,7 +167,7 @@ export default class Model {
   };
 
   async save() {
-    const { REMOTE_PATH, all, Api } = this.constructor as typeof Model;
+    const { REMOTE_PATH, all, Api, find } = this.constructor as typeof Model;
 
     if (REMOTE_PATH) {
       // taking only observable attributes, no methods etc
@@ -184,6 +184,8 @@ export default class Model {
       } else {
         // "PUT" call to backend api
         await Api.put(REMOTE_PATH + '' + this.id, obj);
+
+        if (find(this.id)) all.push(this);
       }
     } else {
       if (!this.id) {
