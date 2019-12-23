@@ -67,7 +67,7 @@ export default class Model {
   static get first() {
     const constructor = this.prototype.constructor as typeof Model;
     const { all } = constructor;
-    return all && all[0];
+    return all && !!all.length && all[0];
   }
 
   /**
