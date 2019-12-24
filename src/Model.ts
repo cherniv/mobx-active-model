@@ -152,7 +152,7 @@ export default class Model {
     try {
       return this.prototype.constructor.all.find((item: Model) => item.id == id);
     } catch (e) {
-      console.log('Model.find failed:', id, this.prototype.constructor.all);
+      console.log('Model.find failed:', id);
       return null;
     }
   };
