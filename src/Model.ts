@@ -96,7 +96,7 @@ export default class Model {
    * fetchFromRemote([id1,id2,...]) calls Api.get('users/:id1,:id2') => firestore.collection.where(documentId(),'in',ids)
    * fetchFromRemote(query) calls Api.post(':runQuery')
    */
-  static fetchFromRemote = async function(query: any = null, autoPopulate: boolean = true) {
+  static fetchFromRemote = async function(query: any = null, autoMerge: boolean = true) {
     const { Api, REMOTE_PATH } = this;
     var id;
     var to: string = typeof query;
@@ -111,7 +111,7 @@ export default class Model {
         var { data } = await Api.post(':runQuery', query);
         _data = data;
       }
-      autoPopulate && this.populate(_data);
+      autoMerge && this.merge(_data);
       return _data;
     } catch (e) {
       console.warn('Model.fetchFromRemote failed', e);
@@ -119,32 +119,37 @@ export default class Model {
   };
 
   static populate = function(data: any = [], opts: any = {}) {
-    const { merge = true, concat, mergeProp = 'id' } = opts;
-    var oldData = this.prototype.constructor.all.slice();
-    var newData = data.map((item: any) => this.new(item));
-    var newAll;
-    if (merge) {
-      newAll = oldData;
-      newData.forEach((newItem: any) => {
-        // updating items instead of overwriting them
-        // otherwise references created by fetchFromCache are lost
-        var oldItem = oldData.find((oldItem: any) => {
-          return oldItem[mergeProp] == newItem[mergeProp];
-        });
-        if (oldItem) {
-          _copy(oldItem, newItem);
-        } else {
-          newAll.push(newItem);
-        }
-      });
-    } else if (concat) {
-      newAll = oldData.concat(newData);
-    } else {
-      newAll = newData;
-    }
-
+    var newData = this.convert(data);
+    var newAll = newData;
     this.prototype.constructor.all.replace(newAll);
-  };
+	};
+	
+	/** 
+	 * updating items instead of overwriting them
+	 * otherwise references created by fetchFromCache are lost
+	 * */ 
+  static merge = function(data: any = [], opts: any = {}) {
+    const { mergeProp = 'id' } = opts;
+    var oldData = this.prototype.constructor.all.slice();
+    var newData = this.convert(data);
+    var newAll;
+    newAll = oldData;
+    newData.forEach((newItem: any) => {
+			var oldItem = oldData.find((oldItem: any) => {
+				return oldItem[mergeProp] == newItem[mergeProp];
+			});
+			if (oldItem) {
+				_copy(oldItem, newItem);
+			} else {
+				newAll.push(newItem);
+			}
+		});
+		this.prototype.constructor.all.replace(newAll);
+  }
+
+  static convert = function(data: any = []) {
+    return data.map((item: any) => this.new(item));
+  }
 
   static populateAndCacheOnLocal = function(data: any = [], opts: any = {}) {
     this.populate(data, opts);
