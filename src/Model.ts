@@ -126,6 +126,8 @@ export default class Model {
     if (merge) {
       newAll = oldData;
       newData.forEach((newItem: any) => {
+        // updating items instead of overwriting them
+        // otherwise references created by fetchFromCache are lost
         var oldItem = oldData.find((oldItem: any) => {
             return oldItem[mergeProp] == newItem[mergeProp];
         });
