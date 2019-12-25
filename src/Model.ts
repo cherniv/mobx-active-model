@@ -122,12 +122,13 @@ export default class Model {
     var newData = this.convert(data);
     var newAll = newData;
     this.prototype.constructor.all.replace(newAll);
-	};
-	
-	/** 
-	 * updating items instead of overwriting them
-	 * otherwise references created by fetchFromCache are lost
-	 * */ 
+  };
+
+  /**
+   * updating items instead of overwriting them
+   * otherwise references created by fetchFromCache are lost
+   * */
+
   static merge = function(data: any = [], opts: any = {}) {
     const { mergeProp = 'id' } = opts;
     var oldData = this.prototype.constructor.all.slice();
@@ -135,21 +136,21 @@ export default class Model {
     var newAll;
     newAll = oldData;
     newData.forEach((newItem: any) => {
-			var oldItem = oldData.find((oldItem: any) => {
-				return oldItem[mergeProp] == newItem[mergeProp];
-			});
-			if (oldItem) {
-				_copy(oldItem, newItem);
-			} else {
-				newAll.push(newItem);
-			}
-		});
-		this.prototype.constructor.all.replace(newAll);
-  }
+      var oldItem = oldData.find((oldItem: any) => {
+        return oldItem[mergeProp] == newItem[mergeProp];
+      });
+      if (oldItem) {
+        _copy(oldItem, newItem);
+      } else {
+        newAll.push(newItem);
+      }
+    });
+    this.prototype.constructor.all.replace(newAll);
+  };
 
   static convert = function(data: any = []) {
     return data.map((item: any) => this.new(item));
-  }
+  };
 
   static populateAndCacheOnLocal = function(data: any = [], opts: any = {}) {
     this.populate(data, opts);
