@@ -1,11 +1,11 @@
 import { set, observable, isObservableProp, isComputedProp } from 'mobx';
 
-const _copy = (obj1: any, obj2: any) => {
-  if (!obj2 || !Object.keys(obj2).length) return;
-  for (var key in obj2) {
-    //set(obj1, key, obj2[key]);
-    if (!isComputedProp(obj1, key)) {
-      obj1[key] = obj2[key];
+const _copy = (destination: any, source: any) => {
+  if (!source || !Object.keys(source).length) return;
+  for (var key in source) {
+    //set(obj1, key, source[key]);
+    if (!isComputedProp(destination, key)) {
+        destination[key] = source[key];
     }
   }
 };
