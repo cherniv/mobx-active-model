@@ -1,4 +1,5 @@
 import BaseModel from './Model';
+import { set } from 'mobx';
 
 export default class Model extends BaseModel {
   static _Firebase?: any;
@@ -31,6 +32,6 @@ export default class Model extends BaseModel {
 
   _updateInstance(instance: any, snapshot: any) {
     var data = snapshot.data();
-    Object.assign(instance, data);
+    set(instance, data);
   }
 }
