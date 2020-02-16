@@ -5,7 +5,7 @@ const _copy = (destination: any, source: any) => {
   for (var key in source) {
     //set(obj1, key, source[key]);
     if (!isComputedProp(destination, key)) {
-        destination[key] = source[key];
+      destination[key] = source[key];
     }
   }
 };
