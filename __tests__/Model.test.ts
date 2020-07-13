@@ -69,7 +69,17 @@ describe('Medication model', () => {
   })
   it('"Merge" method should not add new item if exists already in list', async () => {
     Model.populate([{id: 1}, {id: 2}]);
-    Model.merge([{id: 2}, {id: 3}]); // will not add {id:2} again
+    Model.merge([{id: 1}, {id: 2}, {id: 3}]); // will not add {id:1} and {id:2} again
+    expect(Model.all.length).toBe(3);
+  })
+  it('"Merge" method should remove old deprecated item that doesnt exist in new list', async () => {
+    Model.populate([{id: '1'}, {id: '2'}]);
+    Model.merge([{id: '2'}, {id: '3'}]); // {id:1} should not be there
+    expect(Model.find('1')).toBe(undefined);
+  })
+  it('"Merge" method should not remove old deprecated item if removeDeprecated == false', async () => {
+    Model.populate([{id: '1'}, {id: '2'}]);
+    Model.merge([{id: '2'}, {id: '3'}], {removeDeprecated: false}); // {id:1} should not be there
     expect(Model.all.length).toBe(3);
   })
   it("'Merge' method should update item' props", async () => {
