@@ -130,10 +130,7 @@ export default class Model {
    * */
 
   static merge = function(data: any = [], opts: any = {}) {
-    const { 
-      mergeProp = 'id', 
-      removeDeprecated = true,
-    } = opts;
+    const { mergeProp = 'id', removeDeprecated = true } = opts;
     var oldData = this.prototype.constructor.all.slice();
     var newData = this.convert(data);
     var newAll;
